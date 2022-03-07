@@ -4,7 +4,7 @@ import { Box, Typography, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
     image: {
-        background: `url(${'https://www.benq.com/2c/en-us/campaigns/screenbar-desksetup/10.jpg'}) center/55% repeat-x #000`,
+        background: `url(${'https://images.unsplash.com/photo-1444212477490-ca407925329e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8ZG9nc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=600&q=60'}) center/55% repeat-x #000`,
         width: '100%',
         height: '50vh',
         display: 'flex',
@@ -28,8 +28,8 @@ const Banner = () => {
     const classes = useStyles();
     return (
         <Box className = {classes.image}>
-            <Typography>BLOG</Typography>
-            <Typography>Explore the world!</Typography>
+            <Typography>faunaCare</Typography>
+            <Typography>All lives matter!</Typography>
         </Box>
     )
 }

@@ -1,7 +1,9 @@
 export const categories = [
-'Music',
-'Movies',
-'Sports',
-'Tech',
-'Fashion'
+'Dogs',
+'Cows',
+'Cats',
+'Birds',
+'Horse',
+'Others'
+// 'Others'
 ]

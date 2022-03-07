@@ -48,7 +48,7 @@ const initialValues = {
     title:'blog',
     description:'simple blogs',
     picture:'',
-    username:'codeForSelf',
+    username:'Link',
     categories:'All',
     createDate: new Date()
 }

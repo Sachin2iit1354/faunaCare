@@ -15,7 +15,7 @@ const useStyles = makeStyles({
             fontSize: 66,
             color: '#FFFFFF',
             lineHieght: 1
-        }, 
+        },  
         '& :last-child' : {
             fontSize: 20,
             background: '#FFFFFF'

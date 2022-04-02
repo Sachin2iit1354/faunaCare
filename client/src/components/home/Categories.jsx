@@ -1,6 +1,7 @@
 
 import { Button, makeStyles, Table, TableRow, TableCell, TableHead, TableBody } from '@material-ui/core';
 import CreateIcon from '@mui/icons-material/Create';
+import SendIcon from '@mui/icons-material/Send';
 import { Link } from 'react-router-dom';
 
 import { categories } from '../../constants/data';
@@ -14,7 +15,6 @@ const useStyles = makeStyles({
     table: {
         border: '1px solid rgba(224, 224, 224, 1)'
     }
-    
 })
 
 const Categories = () => {

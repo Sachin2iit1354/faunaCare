@@ -22,6 +22,8 @@ const useStyle = makeStyles(theme => ({
     icon: {
         margin: 5,
         padding: 5,
+        height:'35px',
+        width:'35px',
         border: '1px solid #878787',
         borderRadius: 10
     },

@@ -1,8 +1,8 @@
 import { Box, makeStyles, Typography, Grid } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import React, { useState, useEffect, useContext } from 'react';
-import {getPost} from '../../service/api.js'
+import {getPost,deletePost} from '../../service/api.js'
 import { useParams } from 'react-router-dom';
 const useStyle = makeStyles(theme => ({
     container: {
@@ -51,18 +51,25 @@ const useStyle = makeStyles(theme => ({
 const DetailView = ({ match }) =>{
     const classes = useStyle();
     const url = 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
-    
+    const navigate = useNavigate();
     const [post, setPost] = useState({});
     const { id } = useParams();
-
+    let data
     useEffect(() => {
         const fetchData = async () => {
-            let data = await getPost(id);
-            console.log(data);
+             data = await getPost(id);
             setPost(data);
         }
         fetchData();
-    }, []);
+    }, [post]);
+
+    const deleteCurrPost = async () => {    
+        await deletePost(id,data);
+        navigate('/')
+    }
+
+
+
     return(
         <Box className={classes.container}>
             <img src = {post.picture || url} alt = "banner" className={classes.image}/>
@@ -70,7 +77,7 @@ const DetailView = ({ match }) =>{
                 <Link to = {`/update/${post._id}`}>
                     <Edit className={classes.icon} color = 'primary'/>
                 </Link>
-                <Delete className={classes.icon} color = 'error'/>   
+                <Delete onClick={()=>deleteCurrPost()} className={classes.icon} color = 'error'/>
             </Box>
             <Typography className={classes.heading}>{post.title}</Typography>
 

@@ -8,8 +8,6 @@ export const createPost = async (post)=>{
     }catch (error) {
         console.log('Error while calling create post API ',error);
     }
-    
-
 }
 
 export const getAllPosts = async () => {
@@ -26,5 +24,23 @@ export const getPost = async (id) => {
       return response.data;
   } catch (error) {
       console.log('Error while calling getPost API ', error);
+  }
+}
+
+
+export const updatePost = async (id, post) => {
+  try {
+      let response= await axios.put(`${URL}/update/${id}`, post);
+      return response.data;
+  } catch(error) {
+      console.log('Error while calling updatePost API ', error)
+  }
+}
+
+export const deletePost = async (id,post) => {
+  try {
+       await axios.delete(`${URL}/details/${id}`, post  );
+  } catch(error) {
+      console.log('Error while calling deletePost API ', error)
   }
 }

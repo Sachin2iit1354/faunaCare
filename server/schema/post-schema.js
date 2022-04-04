@@ -3,8 +3,7 @@ import mongoose from 'mongoose';
 const PostSchema = mongoose.Schema({
     title: {
         type: String,
-        required: true,
-       
+        // required: true,
     },
     description: {
         type: String,
@@ -15,7 +14,7 @@ const PostSchema = mongoose.Schema({
     },
     username: {
         type: String,
-        required: true
+        // required: true
     },
     categories: {
         type: Array,
@@ -23,6 +22,14 @@ const PostSchema = mongoose.Schema({
     },
     createdDate: {
         type: Date
+    },
+    location:{
+        type:String,
+        required:true
+    },
+    severity:{
+        type:Number,
+        requrired:true
     }
 });
 

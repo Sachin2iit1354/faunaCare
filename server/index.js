@@ -13,6 +13,16 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.use('/', router) 
 
+app.delete('/mens/:id', async(req,res)=> {
+    try {
+        const _id = req.params.id
+        const getMensRecord =await MensRanking.findByIdAndDelete(_id)
+        res.send(getMensRecord)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
+
 const PORT=8000;
 
 app.listen(PORT, () => console.log(`server is running succesfully over the port ${PORT}`));

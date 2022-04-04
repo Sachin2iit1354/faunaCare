@@ -46,8 +46,10 @@ const Post = ({ post }) => {
             <img src={URL} alt="post" className={classes.image} />
             <Typography className={classes.textColor}>{post.categories}</Typography>
             <Typography className={classes.heading}>{addEllipsis(post.title, 20)}</Typography>
-            <Typography className={classes.textColor}>Location: {post.username}</Typography>
+            <Typography className={classes.textColor}>Location : Link</Typography>
+            <Typography className={classes.detail}>Severity  :  {post.severity}</Typography>
             <Typography className={classes.detail}>{addEllipsis(post.description, 100)}</Typography>
+           
         </Box>
     )
 }

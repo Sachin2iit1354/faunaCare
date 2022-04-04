@@ -36,12 +36,12 @@ const useStyle = makeStyles((theme) => ({
     height: "60vh",
   },
   form: {
-      color: "#333C83",
+    color: "#333C83",
     display: "flex",
     flexDirection: "row",
     marginTop: "10px",
-    marginTop:'30px',
-    marginBottom:'35px',
+    marginTop: "30px",
+    marginBottom: "35px",
   },
 
   severity: {
@@ -65,7 +65,7 @@ const useStyle = makeStyles((theme) => ({
   },
   textarea: {
     width: "100%",
-   
+
     border: "none",
     "&:focus-visible": {
       outline: "none",
@@ -74,12 +74,14 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const initialValues = {
-  title: "blog",
-  description: "simple blogs",
+  title: "Save Animal",
+  description: "",
   picture: "",
   username: "Link",
-  categories: "All",
+  categories: "Others",
   createdDate: new Date(),
+  location: "",
+  severity: 7,
 };
 
 const CreateView = () => {
@@ -98,6 +100,12 @@ const CreateView = () => {
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
   };
+  const [sliderValue, setSliderValue] = useState(0);
+  const handleSliderChange = (e, newValue) => {
+      setSliderValue(newValue);
+      setPost({ ...post, ["severity"]: sliderValue });
+    };
+
 
   return (
     <>
@@ -122,37 +130,36 @@ const CreateView = () => {
 
         <div>
           <FormControl className={classes.form}>
-          <h5>Category:</h5>
+            <h5>Category:</h5>
             <InputBase
               onChange={(e) => handleChange(e)}
-              name="title"
+              name="categories"
               placeholder="Animal"
               className={classes.textfield}
-             
             />
           </FormControl>
         </div>
         <div className={classes.severity}>
           <h5>Severity:</h5>
-          <Slider
+            <Slider
             className={classes.slider}
-            aria-label="Always visible"
-            defaultValue={70}
-            // getAriaValueText={valuetext}
-            step={10}
-            //marks={marks}
-            valueLabelDisplay="on"
+            min={0}
+            max={10}
+            name='severity'
+            value={sliderValue}
+            onChange={handleSliderChange}
+            valueLabelDisplay="auto"
+            aria-labelledby="range-slider"
           />
         </div>
         <div>
           <FormControl className={classes.form}>
-          <h5>Location:</h5>
+            <h5>Location:</h5>
             <InputBase
               onChange={(e) => handleChange(e)}
-              name="title"
+              name="location"
               placeholder="Link"
               className={classes.textfield}
-             
             />
           </FormControl>
         </div>

@@ -14,10 +14,32 @@ export const createPost = async (request, response) =>  {
     }
 }
 
+// export const getAllPosts = async (request, response) =>  {
+//     try {
+//         let posts = await Post.find({});
+        
+//         response.status(200).json(posts);
+//     } catch(error) {
+//         response.status(500).json(error);
+//     }
+// }
+
 export const getAllPosts = async (request, response) =>  {
     try {
-        let posts = await Post.find({});
-        
+		let categories = request.query.categories;
+		console.log(request.query.categories);
+		let posts;
+		if(categories){
+			if(categories != 'All Categories'){
+			posts = await Post.find({categories: categories});
+			}
+			else{
+				posts = await Post.find({});
+			}
+		}
+		else{
+        posts = await Post.find({});
+		}
         response.status(200).json(posts);
     } catch(error) {
         response.status(500).json(error);

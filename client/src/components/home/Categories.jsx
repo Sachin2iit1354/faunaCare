@@ -26,15 +26,17 @@ const Categories = () => {
             </Link>
             <Table className = {classes.table}>
                 <TableHead>
-                    <TableRow>
-                        <TableCell>All Categories</TableCell>
-                    </TableRow>
+                    
                 </TableHead>
                 <TableBody>
                     {
                         categories.map(category => (
                             <TableRow>
-                                <TableCell>{category}</TableCell>
+                                <TableCell>
+                                    <Link to={`/?categories=${category}`} style = {{textDecoration: 'none', color: 'inherit'}}>
+                                        {category}
+                                    </Link>
+                                </TableCell>
                             </TableRow>
                         ))
                     }
@@ -45,3 +47,4 @@ const Categories = () => {
 }
 
 export default Categories;
+

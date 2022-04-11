@@ -1,7 +1,8 @@
 export const categories = [
+'All Categories',
 'Dogs',
 'Cows',
-'Cats',
+'cat',
 'Birds',
 'Horse',
 'Others'

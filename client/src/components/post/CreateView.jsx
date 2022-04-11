@@ -1,13 +1,13 @@
 import { React, useState, useEffect, useContext } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  makeStyles,
-  FormControl,
-  InputBase,
-  TextareaAutosize,
-} from "@material-ui/core";
+// import {
+//   Box,
+//   Typography,
+//   Button,
+//   makeStyles,
+//   FormControl,
+//   InputBase,
+//   TextareaAutosize,
+// } from "@material-ui/core";
 
 import { AddCircle } from "@material-ui/icons";
 import { createPost } from "../../service/api";
@@ -16,6 +16,7 @@ import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import SendIcon from "@mui/icons-material/Send";
 import { AddCircle as Add, CallEnd } from "@material-ui/icons";
 import { Slider } from "@material-ui/core";
+import { Box, Typography, makeStyles, TextareaAutosize, Button, FormControl, InputBase, TextField, MenuItem, Select, InputLabel } from '@material-ui/core';
 import { uploadFile } from "../../service/api";
 import { fontSize } from "@mui/system";
 //import { LoginContext } from '../../context/ContextProvider';
@@ -32,7 +33,7 @@ const useStyle = makeStyles((theme) => ({
   },
   image: {
     width: "100%",
-    objectFit: "cover",
+    objectFit: "cover",      
     height: "60vh",
   },
   form: {
@@ -90,22 +91,32 @@ const CreateView = () => {
     "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80";
   const navigate = useNavigate();
   const [post, setPost] = useState(initialValues);
+  const [category, setCategory] = useState('General');
 
   const savePost = async () => {
     await createPost(post);
     // history.push('/');
     navigate("/");
   };
-
+  const handleMenu = (e) => {
+    // setPost({ ...post, [e.target.getAttribute("name")]: e.target.innerText });
+     setCategory(e.target.value);
+    // console.log(e.target.name);
+    setPost({ ...post, [e.target.name]: e.target.value });
+ }
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
   };
   const [sliderValue, setSliderValue] = useState(0);
-  const handleSliderChange = (e, newValue) => {
-      setSliderValue(newValue);
-      setPost({ ...post, ["severity"]: sliderValue });
-    };
+  const [severityStatus, setSeverityStatus] = useState("Less severe");
 
+  const handleSliderChange = (e, newValue) => {
+    setSliderValue(newValue);
+    setPost({ ...post, ["severity"]: sliderValue });
+    {(sliderValue <= 4) && setSeverityStatus("Less Severe")}
+        {(sliderValue > 4 && sliderValue <= 7) && setSeverityStatus("Moderately Severe")}
+        {(sliderValue > 7) && setSeverityStatus("Very Severe")}
+  };
 
   return (
     <>
@@ -127,8 +138,25 @@ const CreateView = () => {
             <SendIcon className={classes.icon}></SendIcon>Post
           </Button>
         </FormControl>
+        <FormControl >
+                <InputLabel id="demo-simple-select-label">CATEGORY</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value = {category}
+                        name = "categories"
+                        onChange = {handleMenu}
+                      >
+                    <MenuItem   value = {'Dogs'}>Dogs</MenuItem>
+                    <MenuItem   value = {'Cows'}>Cows</MenuItem>
+                    <MenuItem   value = {'cat'} >cat</MenuItem>
+                    <MenuItem   value = {'Injuries and accidents'}>Birds</MenuItem>
+                    <MenuItem   value = {'Horse'}>Horse</MenuItem>
+                    <MenuItem   value = {'Others'}>Others</MenuItem>
 
-        <div>
+                    </Select>
+            </FormControl>
+        {/* <div>
           <FormControl className={classes.form}>
             <h5>Category:</h5>
             <InputBase
@@ -138,10 +166,10 @@ const CreateView = () => {
               className={classes.textfield}
             />
           </FormControl>
-        </div>
+        </div> */}
         <div className={classes.severity}>
           <h5>Severity:</h5>
-            <Slider
+          <Slider
             className={classes.slider}
             min={0}
             max={10}
@@ -152,6 +180,8 @@ const CreateView = () => {
             aria-labelledby="range-slider"
           />
         </div>
+        
+        <Typography>{severityStatus}</Typography>
         <div>
           <FormControl className={classes.form}>
             <h5>Location:</h5>
@@ -171,6 +201,7 @@ const CreateView = () => {
           onChange={(e) => handleChange(e)}
           name="description"
         />
+        
       </Box>
     </>
   );

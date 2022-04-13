@@ -1,6 +1,7 @@
 import express from 'express';
-import { createPost, getAllPosts, getPost,deletePost,updatePost } from '../controller/post-controller.js';
-
+import { createPost,updatePost, getAllPosts,deletePost, getPost} from '../controller/post-controller.js';
+import { uploadImage, getImage } from '../controller/image-controller.js';
+import upload from '../utils/upload.js';
 
 const router = express.Router();
 
@@ -9,6 +10,8 @@ router.get('/posts', getAllPosts);
 router.get('/post/:id', getPost);
 router.put('/post/:id', updatePost);
 router.delete('/post/:id', deletePost);
+router.post('/file/upload', upload.single('file'), uploadImage);
+router.get('/file/:filename', getImage);
 export default router;
 
 // import express, { Router } from 'express';

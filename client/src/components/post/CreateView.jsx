@@ -10,14 +10,14 @@ import { React, useState, useEffect, useContext } from "react";
 // } from "@material-ui/core";
 
 import { AddCircle } from "@material-ui/icons";
-import { createPost } from "../../service/api";
+import { createPost, uploadFile } from "../../service/api";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import SendIcon from "@mui/icons-material/Send";
 import { AddCircle as Add, CallEnd } from "@material-ui/icons";
 import { Slider } from "@material-ui/core";
 import { Box, Typography, makeStyles, TextareaAutosize, Button, FormControl, InputBase, TextField, MenuItem, Select, InputLabel } from '@material-ui/core';
-import { uploadFile } from "../../service/api";
+// import { uploadFile } from "../../service/api";
 import { fontSize } from "@mui/system";
 //import { LoginContext } from '../../context/ContextProvider';
 
@@ -82,16 +82,39 @@ const initialValues = {
   categories: "Others",
   createdDate: new Date(),
   location: "",
-  severity: 7,
+  severity: 7
 };
 
 const CreateView = () => {
   const classes = useStyle();
-  const url =
-    "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80";
+  // const url =
+    // "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80";
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [post, setPost] = useState(initialValues);
   const [category, setCategory] = useState('General');
+  const [file, setFile] = useState('');
+  const [imageURL, setImageURL] = useState('');
+
+  const url = post.Imageurl || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQMAAADCCAMAAAB6zFdcAAAAS1BMVEXMzMx/f3/Q0NB5eXnIyMiVlZWEhITAwMCLi4vR0dF8fHy0tLSjo6OysrLDw8Obm5t1dXWsrKyWlpampqa6urqtra2Ojo6fn59vb28EtcIDAAAFL0lEQVR4nO2bCZejKhBGpRAVUNxQ3///pa9wSUdjejJ9Mp1ovnvOTBYpZriylAajCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnAqK0+cQ06ub8lOolM+iPKgEGqQwz0HI4ZgSSAqhnoMQ8pgOYikyTc9AZ0LGr27OjwgOnnP2CA4+ycHU8fcOfIoDits+yZpix8KnOKBc8hoojBT+JuhDHJDilXRCdtuoz3DAvUBckOkm7DMcxFcKxE3YRzig1lw7kOnm8Ec46FcOzGZG+AwHiVg5yOHAtKd3cJsNklrPB8XZHZBXWeNWR6hbzwebBp/OgR6k4XRwkw2uFGzvGp3NwZIQrhMh8tcJwk3MyRxkS683awmdnA8Y4U6dK5NLvga+WbWV0p4vmow05W1NZ3JAqVjNfWsJlHZtW+zdRj+RA7IrA0IkmwbfuYVyIgdUy7UCYZLHWnYaB6vL47+TcBYH1NwqYAnZIzWdxUFvdhTcl0BaX/k7gwOKk30FLKHfWwicMrxILkfO4IDXxPvsSOAFJNxeTZa18wQOyN/rBJOEZptJLbOnsbPDwzvgNPg7BVsJFH9NHXK6kXB4B3tr4obrX9bXuaRsxu8O7oDKPyrgpuZ6DtomUibjXPLYDvS9NfGehJsswghPx3YQ3V0TtxJaHZbEbKe4qQ+9/yB5VAFLqPW0JO51kiM7+BtMfXfyZDOf4UDsd4KZD3HwLXAAB3AAB3AAB3AAB3AAB3AABydzQA/fO3gAc8znWG5/Y/05sj6mg4iKLHkOWXFQBWE/wbtVBAAAAIBfJXZ/WTL90yWAc9eVLsXTO6XfACrkoyXtWFJX9vvMh8pG55eNOlT58dX999P/4b+HrOC/wlbTaN5tOu86Hb/5+jiXZAfS0uXL6XV6e/kYx5QrmmrgKzA/vrpqrvMNCS2jNm1VR7Vqw+/og2o8t9Kq0uVhR874MVo58NbzUf7QqRDTpuFKy8+hZG1wQL5Ug2MHduC6Rwf8L5S3T8O+ntAyLZK2ln1ZiJxc1fq88tSZoksq7tiZLcR49fflQOdCFT27U5m1idJlOOtVuoSWpc6VLmTnleS6TWuTgeuNqO89V/t+EkYHSa5102tdZ9rzW53UJCxRUUWpIa2dXEpGs4NEUyxdVMZaF0KnkrtLEkKJQ/UwOqgLrSOZajNocjJ2FXnBVac3T3q8nqkfcIObnKjOeMAWrTJ1HG4A8bmrk6EsyyqNVmMhDzvSTBppXw8J+0gKnbUcakPo5IC06/I+OAi9X3h2kE91PbwO/RobB3xO+9wndVwtDmxRFHZc37wZA6QfHcQmpV6UXSs05T2Xpzl07gedbFo7O6DJQc91Wfva9u6xdtBrxV2XDI+FMLlV3O4wl9dj0bgKU7zn1k4OXFpx528FT3iy5R40horFgfA8iCp2UBOPmzAWeNRc6noryJrJgRrGfjAkLlWy5SmtKASP86x3rk+mhaGRrW1lSTTwJBhLngSLuDMibMKrCv52Dp3mxKyMfSa9Nsa7rBnnRNG4NNvb5/xqfMOTv+f1seMTP1BUiswXOWnflD6s6Tzgh7koO0oyXiOoC/tQlSPLx2LlwkIajs+hdU1FS04J5XKrG9snOXcVLhFzXfnrWvoNtOQ3y58x01GO53BJ6wd16JI/zXFfidTlcEigloqmt7QUv/vQz3tCTdLV5qh3hZ8EFcPwjjndr3KobgsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMCv8T8P0EKx6h83/QAAAABJRU5ErkJggg==';
+
+  useEffect(() => {
+    const getImage = async () => { 
+        if(file) {
+            const data = new FormData();
+            data.append("name", file.name);
+            data.append("file", file);
+            
+            const image = await uploadFile(data);
+            post.picture = image.data;
+            setImageURL(image.data);
+        }
+    }
+    getImage();
+    // post.categories = location.search?.split('=')[1] || 'All'
+    
+}, [file])
 
   const savePost = async () => {
     await createPost(post);
@@ -122,8 +145,20 @@ const CreateView = () => {
     <>
       <Box className={classes.container}>
         <img src={url} alt="banner" className={classes.image} />
+
+        
+
         <FormControl className={classes.form}>
-          <DriveFolderUploadIcon fontSize="large" color="info" />
+        <label htmlFor="fileInput">
+                <DriveFolderUploadIcon fontSize="large" color="info" />
+        </label>
+        <input
+            type="file"
+            id="fileInput"
+            style={{ display: "none" }}
+            className={classes.circle}
+            onChange={(e) => setFile(e.target.files[0])}
+        />
           <InputBase
             onChange={(e) => handleChange(e)}
             name="title"
@@ -138,6 +173,10 @@ const CreateView = () => {
             <SendIcon className={classes.icon}></SendIcon>Post
           </Button>
         </FormControl>
+
+
+
+
         <FormControl >
                 <InputLabel id="demo-simple-select-label">CATEGORY</InputLabel>
                     <Select
@@ -156,17 +195,7 @@ const CreateView = () => {
 
                     </Select>
             </FormControl>
-        {/* <div>
-          <FormControl className={classes.form}>
-            <h5>Category:</h5>
-            <InputBase
-              onChange={(e) => handleChange(e)}
-              name="categories"
-              placeholder="Animal"
-              className={classes.textfield}
-            />
-          </FormControl>
-        </div> */}
+       
         <div className={classes.severity}>
           <h5>Severity:</h5>
           <Slider

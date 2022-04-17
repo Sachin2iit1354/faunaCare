@@ -52,8 +52,8 @@ const DetailView = ({ match }) => {
   const classes = useStyle();
   const url =
     "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80";
-  const navigate = useNavigate();
-  const [post, setPost] = useState({});
+    const Navigate =   useNavigate();  
+    const [post, setPost] = useState({});
   const { id } = useParams();
   let data;
   useEffect(() => {
@@ -64,37 +64,34 @@ const DetailView = ({ match }) => {
     fetchData();
   }, [post]);
 
-  const deleteCurrPost = async () => {
-    await deletePost(id, data);
-    navigate("/");
-  };
+  const deleteRecord = async () => {    
+    console.log(id)
+    await deletePost(id);
+    Navigate('/')
+}
 
   return (
     <Box className={classes.container}>
       <img src={post.picture || url} alt="banner" className={classes.image} />
       <Box className={classes.icons}>
-        <Link to={`/update/${post._id}`}>
+        {/* <Link to={`/update/${post._id}`}>
           <Edit className={classes.icon} color="primary" />
-        </Link>
-        <Delete
-          onClick={() => deleteCurrPost()}
-          className={classes.icon}
-          color="error"
-        />
+        </Link> */}
+        <Delete onClick={() => deleteRecord()} className={classes.icon} color = 'error'/>   
       </Box>
       <Typography className={classes.heading}>{post.title}</Typography>
       <Box className={classes.subheading}>
-        <div className={classes.location}> 
-          <Typography style={{marginBottom:'10px'}}>
+        <div className={classes.location}>
+          <Typography style={{ marginBottom: '10px' }}>
             Category :{" "}
             <span style={{ fontWeight: 600 }}>{post.categories}</span>
           </Typography>
 
-          <Typography  style={{marginBottom:'10px'}}>
+          <Typography style={{ marginBottom: '10px' }}>
             Location : <span style={{ fontWeight: 600 }}>{post.location}</span>
           </Typography>
 
-          <Typography> 
+          <Typography>
             Severity : <span style={{ fontWeight: 600 }}>{post.severity}</span>
           </Typography>
         </div>

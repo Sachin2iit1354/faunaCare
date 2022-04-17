@@ -9,7 +9,7 @@ router.post('/create', createPost);
 router.get('/posts', getAllPosts);
 router.get('/post/:id', getPost);
 router.put('/post/:id', updatePost);
-router.delete('/post/:id', deletePost);
+router.delete('/delete/:id', deletePost);
 router.post('/file/upload', upload.single('file'), uploadImage);
 router.get('/file/:filename', getImage);
 export default router;

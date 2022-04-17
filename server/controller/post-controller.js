@@ -1,4 +1,5 @@
-// import post from '../schema/post-schema.js';
+
+
 import Post from '../schema/post-schema.js';
 
 export const createPost = async (request, response) =>  {
@@ -14,22 +15,13 @@ export const createPost = async (request, response) =>  {
     }
 }
 
-// export const getAllPosts = async (request, response) =>  {
-//     try {
-//         let posts = await Post.find({});
-        
-//         response.status(200).json(posts);
-//     } catch(error) {
-//         response.status(500).json(error);
-//     }
-// }
 
 export const getAllPosts = async (request, response) =>  {
     try {
 		let categories = request.query.categories;
 		console.log(request.query.categories);
 		let posts;
-		if(categories){
+		if(categories) {
 			if(categories != 'All Categories'){
 			posts = await Post.find({categories: categories});
 			}
@@ -56,17 +48,36 @@ export const getPost = async (request, response) => {
     }
 }
 
-export const deletePost = async(req,res)=> {
+// export const deletePost = async(request,response)=> {
+//     try {
+//        const post = await Post.findById(request.params.id);
+//        await post.delete()
+//         response.send(userToDelete);
+//     } catch (error) {
+//         response.status(400).send(error)
+//     }
+// }
+
+// export const deletePost = async(request,response)=> {
+//     try {
+//        await Post.findByIdAndDelete(request.params.id);
+//        response.status(200).json("User has been deleted");
+//     } catch (error) {
+//         response.status(400).send(error)
+//     }
+// }
+
+export const deletePost = async (request, response) => {
     try {
-       const post = await Post.findById(request.params.id);
-       await post.delete()
-        res.send(userToDelete);
+        const post = await Post.findById(request.params.id);
+        console.log(post)
+        await post.delete()
+
+        response.status(200).json('post deleted successfully');
     } catch (error) {
-        res.status(400).send(error)
+        response.status(500).json(error)
     }
 }
-
-
 
 export const updatePost = async (request, response) => {
     try {

@@ -1,10 +1,14 @@
 export const categories = [
 'All Categories',
-'Dogs',
-'Cows',
-'cat',
-'Birds',
+'Dog',
+'Cow',
+'Cat',
+'Bird',
 'Horse',
 'Others'
 // 'Others'
 ]
+
+// export default severity = [
+    
+// ]

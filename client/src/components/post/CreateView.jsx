@@ -1,14 +1,4 @@
 import { React, useState, useEffect, useContext } from "react";
-// import {
-//   Box,
-//   Typography,
-//   Button,
-//   makeStyles,
-//   FormControl,
-//   InputBase,
-//   TextareaAutosize,
-// } from "@material-ui/core";
-
 import { AddCircle } from "@material-ui/icons";
 import { createPost, uploadFile } from "../../service/api";
 import { useNavigate, Link, useLocation } from "react-router-dom";
@@ -17,9 +7,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { AddCircle as Add, CallEnd } from "@material-ui/icons";
 import { Slider } from "@material-ui/core";
 import { Box, Typography, makeStyles, TextareaAutosize, Button, FormControl, InputBase, TextField, MenuItem, Select, InputLabel } from '@material-ui/core';
-// import { uploadFile } from "../../service/api";
 import { fontSize } from "@mui/system";
-//import { LoginContext } from '../../context/ContextProvider';
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -186,10 +174,10 @@ const CreateView = () => {
                         name = "categories"
                         onChange = {handleMenu}
                       >
-                    <MenuItem   value = {'Dogs'}>Dogs</MenuItem>
-                    <MenuItem   value = {'Cows'}>Cows</MenuItem>
-                    <MenuItem   value = {'cat'} >cat</MenuItem>
-                    <MenuItem   value = {'Injuries and accidents'}>Birds</MenuItem>
+                    <MenuItem   value = {'Dogs'}>Dog</MenuItem>
+                    <MenuItem   value = {'Cows'}>Cow</MenuItem>
+                    <MenuItem   value = {'cat'} >Cat</MenuItem>
+                    <MenuItem   value = {'Bird'}>Bird</MenuItem>
                     <MenuItem   value = {'Horse'}>Horse</MenuItem>
                     <MenuItem   value = {'Others'}>Others</MenuItem>
 

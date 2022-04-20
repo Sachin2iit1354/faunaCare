@@ -8,6 +8,8 @@ import { getAllPosts } from '../../service/api';
 const Posts=() =>{
     const [posts, setPosts] = useState([]);
     const { search } = useLocation();
+    
+    console.log(search);
     useEffect(() => {
         const fetchData = async () => {
             let data = await getAllPosts(search);
@@ -18,7 +20,7 @@ const Posts=() =>{
     }, [search])
 
     return(
-        posts.map(post=>(
+        posts && posts.map(post=>(
             <Grid item lg={3} sm={4} xs={12}>
                 <Link to = {`/details/${post._id}`} style = {{textDecoration:'none', color : 'inherit'}}>
                     <Post post = {post}/>

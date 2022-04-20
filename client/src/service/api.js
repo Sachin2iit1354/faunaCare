@@ -21,6 +21,7 @@ export const createPost = async (post)=>{
 
 export const getAllPosts = async (param) => {
   try {
+      // console.log(param)
       let response = await axios.get(`${URL}/posts/${param}`);
       return response.data;
   } catch (error) {

@@ -4,7 +4,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import SendIcon from '@mui/icons-material/Send';
 import { Link } from 'react-router-dom';
 
-import { categories } from '../../constants/data';
+import { categories, severities } from '../../constants/data';
 
 const useStyles = makeStyles({
     forButtonCreate: {
@@ -17,13 +17,16 @@ const useStyles = makeStyles({
     }
 })
 
-const Categories = () => {
+const LeftContainer = () => {
     const classes = useStyles();
     return (
         <>
             <Link to = {'/create'} style = {{textDecoration: 'none', color: 'inherit'}}>
                 <Button variant = "contained" className = {classes.forButtonCreate}><CreateIcon></CreateIcon>Create Post</Button>
             </Link>
+
+            {/* Categories */}
+
             <Table className = {classes.table}>
                 <TableHead>
                     
@@ -42,9 +45,30 @@ const Categories = () => {
                     }
                 </TableBody>
             </Table>
+
+            {/* Severity */}
+
+            <Table className = {classes.table}>
+                <TableHead>
+                    Severity
+                </TableHead>
+                <TableBody>
+                    {
+                        severities.map(severity => (
+                            <TableRow>
+                                <TableCell>
+                                    <Link to={`/?severities=${severity}`} style = {{textDecoration: 'none', color: 'inherit'}}>
+                                        {severity}
+                                    </Link>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    }
+                </TableBody>
+            </Table>
         </>
     )
 }
 
-export default Categories;
+export default LeftContainer;
 

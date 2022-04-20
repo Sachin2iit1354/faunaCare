@@ -174,9 +174,9 @@ const CreateView = () => {
                         name = "categories"
                         onChange = {handleMenu}
                       >
-                    <MenuItem   value = {'Dogs'}>Dog</MenuItem>
-                    <MenuItem   value = {'Cows'}>Cow</MenuItem>
-                    <MenuItem   value = {'cat'} >Cat</MenuItem>
+                    <MenuItem   value = {'Dog'}>Dog</MenuItem>
+                    <MenuItem   value = {'Cow'}>Cow</MenuItem>
+                    <MenuItem   value = {'Cat'} >Cat</MenuItem>
                     <MenuItem   value = {'Bird'}>Bird</MenuItem>
                     <MenuItem   value = {'Horse'}>Horse</MenuItem>
                     <MenuItem   value = {'Others'}>Others</MenuItem>

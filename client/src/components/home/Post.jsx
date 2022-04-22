@@ -6,6 +6,7 @@ const useStyles = makeStyles({
         margin: '10px',
         border: '1px solid #d3cede',
         borderRadius: 10,
+        backgroundColor: '#FBEEC1',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -42,7 +43,7 @@ const Post = ({ post }) => {
     } 
 
     return (
-        <Box className={classes.container}>
+        <Box className={classes.container} hover = {true}>
             <img src={URL} alt="post" className={classes.image} />
             <Typography className={classes.textColor}>{post.categories}</Typography>
             <Typography className={classes.heading}>{addEllipsis(post.title, 20)}</Typography>

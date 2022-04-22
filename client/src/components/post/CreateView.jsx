@@ -19,6 +19,10 @@ const useStyle = makeStyles((theme) => ({
   icon: {
     marginRight: "5px",
   },
+  fields : {
+    margin : 50,
+    width : '20%'
+  }, 
   image: {
     width: "100%",
     objectFit: "cover",      
@@ -165,7 +169,7 @@ const CreateView = () => {
 
 
 
-        <FormControl >
+        <FormControl className={classes.fields}>
                 <InputLabel id="demo-simple-select-label">CATEGORY</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"

@@ -1,8 +1,11 @@
 
-import { Button, makeStyles, Table, TableRow, TableCell, TableHead, TableBody } from '@material-ui/core';
+import { Button, makeStyles, Table, TableRow, TableCell, TableHead, TableBody, Box } from '@material-ui/core';
 import CreateIcon from '@mui/icons-material/Create';
 import SendIcon from '@mui/icons-material/Send';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import { React, useState } from "react";
+
+
 
 import { categories, severities } from '../../constants/data';
 
@@ -17,8 +20,31 @@ const useStyles = makeStyles({
     }
 })
 
+
+
+
+
+
 const LeftContainer = () => {
     const classes = useStyles();
+    const navigate = useNavigate();
+
+    const initialValues = {
+        categories : "All Categories",
+        severities : "All",
+    }
+
+    const [queries, setQueries] = useState(initialValues);
+
+    const handleClick = (e) => {
+        setQueries({...queries, [e.target.getAttribute('name')] : e.target.getAttribute('value')});
+        console.log(queries.categories);
+        console.log(queries.severities);
+        const URL = `/?categories=${queries.categories}&severities=${queries.severities}`;
+        console.log(URL);
+        navigate(URL);
+    }
+
     return (
         <>
             <Link to = {'/create'} style = {{textDecoration: 'none', color: 'inherit'}}>
@@ -34,11 +60,9 @@ const LeftContainer = () => {
                 <TableBody>
                     {
                         categories.map(category => (
-                            <TableRow>
-                                <TableCell>
-                                    <Link to={`/?categories=${category}`} style = {{textDecoration: 'none', color: 'inherit'}}>
+                            <TableRow hover = {true}>
+                                <TableCell name = 'categories' value = {category} onClick = {(e) => handleClick(e)}>
                                         {category}
-                                    </Link>
                                 </TableCell>
                             </TableRow>
                         ))
@@ -55,11 +79,9 @@ const LeftContainer = () => {
                 <TableBody>
                     {
                         severities.map(severity => (
-                            <TableRow>
-                                <TableCell>
-                                    <Link to={`/?severities=${severity}`} style = {{textDecoration: 'none', color: 'inherit'}}>
-                                        {severity}
-                                    </Link>
+                            <TableRow hover = {true}>
+                                <TableCell name = "severities" value = {severity} onClick = {(e) => handleClick((e))}>
+                                    {severity}
                                 </TableCell>
                             </TableRow>
                         ))

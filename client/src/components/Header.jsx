@@ -1,23 +1,25 @@
 import { AppBar, Toolbar, Typography, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-
+ 
 const useStyles = makeStyles({
     components: {
         background: '#FFFFFF',
         color: 'black'
-    }, 
+    },
     container: {
+        backgroundColor: '#FFFBE9',
         justifyContent: 'center',      
         '& > *': {
             padding: 20
-        }  
-    }, 
+        },  
+        color: '#733C3C'
+    },
     link: {
         textDecoration: 'none',
         color: 'inherit'
     }
 })
-
+ 
 const Header = () => {
     const classes = useStyles();
     return (
@@ -31,5 +33,5 @@ const Header = () => {
         </AppBar>
     )
 }
-
+ 
 export default Header;

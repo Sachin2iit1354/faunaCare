@@ -5,16 +5,17 @@ import React, { useState, useEffect, useContext } from "react";
 import { getPost, deletePost } from "../../service/api.js";
 import { useParams } from "react-router-dom";
 const useStyle = makeStyles((theme) => ({
-
+ 
   container: {
     padding: "0 100px",
     [theme.breakpoints.down("md")]: {
       margin: 0,
     },
+    backgroundColor : '#C1CFC0'
   },
   image: {
     width: "100%",
-    height: "50vh",
+    height: "70vh",
     objectFit: "cover",
   },
   icons: {
@@ -35,7 +36,7 @@ const useStyle = makeStyles((theme) => ({
     margin: "50px 0 10px 0",
   },
   subheading: {
-    color: "#878787",
+    color: "#161E54",
     display: "flex",
     margin: "20px 0",
     [theme.breakpoints.down("sm")]: {
@@ -47,7 +48,7 @@ const useStyle = makeStyles((theme) => ({
     color: "inherit",
   },
 }));
-
+ 
 const DetailView = ({ match }) => {
   const classes = useStyle();
   const url =
@@ -63,13 +64,13 @@ const DetailView = ({ match }) => {
     };
     fetchData();
   }, [post]);
-
+ 
   const deleteRecord = async () => {    
     console.log(id)
     await deletePost(id);
     Navigate('/')
 }
-
+ 
   return (
     <Box className={classes.container}>
       <img src={post.picture || url} alt="banner" className={classes.image} />
@@ -77,31 +78,37 @@ const DetailView = ({ match }) => {
         {/* <Link to={`/update/${post._id}`}>
           <Edit className={classes.icon} color="primary" />
         </Link> */}
-        <Delete onClick={() => deleteRecord()} className={classes.icon} color = 'error'/>   
+        <Delete onClick={() => deleteRecord()} className={classes.icon} color = 'error'/>  
       </Box>
       <Typography className={classes.heading}>{post.title}</Typography>
       <Box className={classes.subheading}>
         <div className={classes.location}>
-          <Typography style={{ marginBottom: '10px' }}>
+          <Typography style={{ marginBottom: '10px',fontWeight:'600'  }}>
             Category :{" "}
-            <span style={{ fontWeight: 600 }}>{post.categories}</span>
+            <span style={{ fontWeight:'400' }}>{post.categories}</span>
           </Typography>
-
-          <Typography style={{ marginBottom: '10px' }}>
-            Location : <span style={{ fontWeight: 600 }}>{post.location}</span>
+ 
+          {/* <Typography style={{ marginBottom: '10px',fontWeight:'600' }}>
+            Location : <span style={{ fontWeight:'400' }} ><a target= '_blank'>{post.location}</a></span>
+          </Typography> */}
+         
+          <Typography style={{ marginBottom: '10px',fontWeight:'600' }}>
+            Location : <span style={{ fontWeight:'400' }} ><a target= '_blank'  href={post.location}>{post.location}</a></span>
           </Typography>
-
-          <Typography>
-            Severity : <span style={{ fontWeight: 600 }}>{post.severity}</span>
+          {/* <a href={post.location}>Visit W3Schools.com!</a> */}
+          <Typography style={{ marginBottom: '10px',fontWeight:'600' }}>
+            Severity : <span style={{ fontWeight:'400' }} >{post.severity}</span>
           </Typography>
         </div>
-
+ 
         <Typography style={{ marginLeft: "auto" }}>
           {new Date(post.createdDate).toDateString()}
         </Typography>
       </Box>
-
-      <Typography>{post.description}</Typography>
+ 
+      <Typography>
+           {post.description}
+      </Typography>
     </Box>
   );
 };
